@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lock-free-smart-pointer", "lock-free-smart-pointer\lock-free-smart-pointer.vcxproj", "{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Debug|ARM64.Build.0 = Debug|ARM64
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Debug|x64.ActiveCfg = Debug|x64
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Debug|x64.Build.0 = Debug|x64
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Debug|x86.ActiveCfg = Debug|Win32
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Debug|x86.Build.0 = Debug|Win32
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Release|ARM64.ActiveCfg = Release|ARM64
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Release|ARM64.Build.0 = Release|ARM64
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Release|x64.ActiveCfg = Release|x64
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Release|x64.Build.0 = Release|x64
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Release|x86.ActiveCfg = Release|Win32
+		{0F85EC91-208B-42AD-AB21-DC4CC8B90AF8}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3E06DE0-66CC-413D-8765-CE6225B8FE22}
+	EndGlobalSection
+EndGlobal
