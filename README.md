@@ -137,8 +137,7 @@ int main(int argc, char **argv) {
 
 Create destructor of atomic shared pointer:
 ```c
-void foo_destroy(PVOID p_context, PNTARC p_arc)
-{
+void foo_destroy(PVOID p_context, PNTARC p_arc) {
     if (p_arc->p_data == 0) {
         return;
     }
@@ -156,8 +155,7 @@ void foo_destroy(PVOID p_context, PNTARC p_arc)
 
 Create constructor for atomic shared pointer:
 ```c
-BOOL foo_new(PNTARC p_arc, params...)
-{
+BOOL foo_new(PNTARC p_arc, params...) {
     PFOO p_foo = NULL;
     PNTARC_CONTROL_BLOCK p_control_block = NULL;
 
