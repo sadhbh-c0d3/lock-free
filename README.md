@@ -11,6 +11,52 @@ A Library of the Lock-Free Solutions in C for Kernel Model Development on Window
 
 ## Low-Latency Ring-Buffer
 
+*‼️ You are responsible for allocating buffer and accessing its elements by index*
+
+The `NTRINGB_POS` controlls current stream position, which is an index in your buffer.
+You are the one who decides what is the buffer and how to access its elements.
+
+The `NTRINGB` controlls read and write transactions. You need one instance of this
+data structure shared between producers and consumers.
+
+*‼️ You can have multiple producers and multiple consumers, but not more than buffer size*
+
+While `NTRINGB` supports multiple producers and consumers, the total number of all of them
+must not exceed buffer size, and shall be less than half of the buffer size. This is due to
+allocation technique, which would start causing problems if total number of producers and consumers
+exceeded the limit of buffer size.
+
+*‼️ Bigger buffer is more resistant to jitter, and allows more producers and consumers, while latency is not affected*
+
+There is three latency numbers:
+- Time between moment you insert new data on Thread A, to the moment when you pick the data on Thread B
+- Time it takes to begin transaction when buffer is available (no wait)
+- Time it takes to begin transaction when buffer was not available (this is wake-up time not the whole time)
+
+This is lock-free / wait-free solution, meaning that all operations on `NTRINGB` and `NTRINGB_POS` are never
+acquiring any locks from operating system, and are never waiting for operating system. While ring-buffer in
+order to be thread-safe must implement wait semantics, the wait happens in busy-spin without any yield to
+operatign system, meaning that one CPU core is fully consumed by this wait, which guarantees instant wake-up.
+
+This solution is designed for pipelining, where one CPU core is receiving data in some direct manner from source,
+and writes that data into ring-buffer, so that another CPU core can pick that data for further processing. This way
+the CPU core that is originally receiving data can uninterruptibly do fast processing and receive next data, while
+second CPU core is free to do operating system calls, such as sending data into database or logging. If the second
+thread takes too much time to process one item, more consumer thread can be used to increase the bandwidth of 
+consumers.
+
+This solution works well for situations when either data keeps coming from the source, or sink keeps sending data.
+The essential indicator whether this solution is good for you, is whether you have lots of data that keeps moving,
+or it is not suitable if do you have lots of waiting on I/O. Solution might be viable for when there is number of
+source channels, or sinks that you need to scan, and in such cases you can use asynchronous polling.
+
+Normally asynchronous programming may sound like opposite to low-latency. However if you use `NTRINGB` polling,
+you can have multiple ring-buffers, and if you iterate over them in round-robin fashion polling for new data
+you will never give control back to operating system, and you will not be wasting CPU on spinning to do operation
+on single ring-buffer. If you have four channels, then without polling you would need to have four threads
+that produce, and four threads that consume, and that already consumed all your CPU cores. With polling you
+can have just one thread that consumes from multiple ring-buffers, and this way CPU cycles aren't wasted.
+
 ### Setup
 
 Include header:
