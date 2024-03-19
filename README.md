@@ -132,8 +132,9 @@ int main(int argc, char **argv) {
     // Release main reference to atomic shared pointer
     ntarc_atomic_store(&g_foo, &null_foo);
 }
-
 ```
+
+### Dropped Object Destructor
 
 Create destructor of atomic shared pointer:
 ```c
@@ -152,6 +153,8 @@ void foo_destroy(PVOID p_context, PNTARC p_arc) {
     p_arc->p_control_block = 0;
 }
 ```
+
+### New Object Constructor
 
 Create constructor for atomic shared pointer:
 ```c
