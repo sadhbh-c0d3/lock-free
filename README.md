@@ -1,9 +1,15 @@
-# Lock-Free Utilities
+# Low-Latency Lock-Free Utilities
 
 A Library of the Lock-Free Solutions in C for Kernel Model Development on Windows:
 
  * `lock-free-ring-buffer` - Low Latency Ring Buffer
  * `lock-free-smart-pointer` - Atomic Smart Pointer
+
+
+## What is Low Latency?
+
+🌪️ Low latency is nanoseconds! Every CPU cycle matters. You want to fit evreything in Level 3 cache. You want to pin threads to CPU cores.
+You want lock-free and wait-free programming, so that your threads run at full throtle without any interruptions!
 
 ## Watch
 [![Watch My Video!](https://img.youtube.com/vi/aYwmopy6cdY/0.jpg)](https://youtu.be/aYwmopy6cdY&list=PLAetEEjGZI7OUBYFoQvI0QcO9GKAvT1xT&index=1)
