@@ -108,6 +108,19 @@ This requires support of 128-bit CAS, which Windows NT provides.
 
 ### Setup
 
+This is fragment from example, where we demonstrate global `NTARC` variable.
+
+*‼️ Shared data structures shall have their NTARC fields reset to `NTARC{0, 0}` using `ntarc_atomic_store()`*
+
+This means that any shared data structure that has fields of NTARC need to get those fields reset to `NTARC{0,0}`
+at the moment that data structure is destroyed.
+
+In case of global variables of type NTARC they need to be reset to `NTARC{0,0}` at the end of `main()` function.
+
+This is important, because `ntarc_atomic_store()` with `NTARC{0,0}` will not only zero those variables, but it
+will also release and destroy those shared objects, and this will happen in atomic fashion, so that no thread
+will borrow the reference to any of these variables after that time.
+
 Include header:
 ```c
     #include <NTARC.H> 
@@ -136,6 +149,11 @@ int main(int argc, char **argv) {
 
 ### Dropped Object Destructor
 
+*‼️ You are responsible for deallocating all memory allocated for both your object and also control block*
+
+Copy the below code, and replace `deallocate_memory()` with your memory deallocation routine, and 
+replace `destroy_foo_data()` with destructor of your user type.
+
 Create destructor of atomic shared pointer:
 ```c
 void foo_destroy(PVOID p_context, PNTARC p_arc) {
@@ -155,6 +173,11 @@ void foo_destroy(PVOID p_context, PNTARC p_arc) {
 ```
 
 ### New Object Constructor
+
+*‼️ You are responsible for allocating all memory for both your object and also control block*
+
+Copy the below code, and replace `allocate_memory()` with your memory allocation routine, and 
+replace `create_foo()` with constructor of your user type.
 
 Create constructor for atomic shared pointer:
 ```c
@@ -194,6 +217,28 @@ bail010:
 
 ### Store New Object
 
+*‼️ NTARC shall be used within the scope of the function*
+
+*‼️ NTARC shall not be stored otherwise than by using `ntarc_atomic_store()`*
+
+If you need to store NTARC for later in any shared data structure, you should always use `ntarc_atomic_store()`.
+Treat that as good coding practice. If you always use `ntarc_atomic_store()` you will never run into
+undefined behavior of the race-condition. The cost of running `ntarc_atomic_store()` is negligible.
+
+*‼️ NTARC must be dropped at the end of scope*
+
+This is C, and we don't have automatic unwinding. We must always call `ntarc_drop()` on every NTARC
+local to the scope.
+
+*‼️ Library is designed in such a fashion that your scope never passes ownership of any NTARC to any other place*
+
+You should have no reasons to call `ntarc_clone()`, as if you are storing NTARC, then you use `ntarc_atomic_store()`,
+and when you finish using within current scope you call `ntarc_drop()`.
+
+When calling function that would take `NTARC`, you should pass `PNTARC` as parameter, i.e. you should pass by reference, because
+original NTARC lives on the stack in the calling scope, and should not be cloned. Pass `PNTARC` so that the function you are
+calling can use `ntarc_atomic_store()` of that NTARC for later.
+
 Set atomic shared pointer to new object:
 ```c
 void make_foo() {
@@ -217,6 +262,24 @@ void make_foo() {
 ```
 
 ### Load Current Object
+
+*‼️ NTARC shall be used within the scope of the function*
+
+*‼️ NTARC shall not be loaded otherwise than by using `ntarc_atomic_load()`*
+
+If you need to load NTARC from any shared data structure, you should always use `ntarc_atomic_load()`.
+Treat that as good coding practice. If you always use `ntarc_atomic_load()` you will never run into
+undefined behavior of the race-condition. The cost of running `ntarc_atomic_load()` is negligible.
+
+*‼️ NTARC must be dropped at the end of scope*
+
+This is C, and we don't have automatic unwinding. We must always call `ntarc_drop()` on every NTARC
+local to the scope.
+
+*‼️ Library is designed in such a fashion that your scope never passes ownership of any NTARC to any other place*
+
+You should have no reasons to call `ntarc_clone()`, as if you are loading NTARC, then you use `ntarc_atomic_load()`,
+and when you finish using within current scope you call `ntarc_drop()`.
 
 Get object from atomic shared pointer:
 ```c
