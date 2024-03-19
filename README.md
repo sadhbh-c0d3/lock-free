@@ -189,6 +189,8 @@ bail010:
 
 ```
 
+### Store New Object
+
 Set atomic shared pointer to new object:
 ```c
 void make_foo() {
@@ -210,6 +212,8 @@ void make_foo() {
     ntarc_drop(&foo);
 }
 ```
+
+### Load Current Object
 
 Get object from atomic shared pointer:
 ```c
