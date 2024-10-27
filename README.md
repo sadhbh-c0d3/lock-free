@@ -12,6 +12,7 @@ A Library of the Lock-Free Solutions in C for Kernel Model Development on Window
 You want lock-free and wait-free programming, so that your threads run at full throtle without any interruptions!
 
 ## Watch
+[![Watch My Video!](https://img.youtube.com/vi/KwSWLVUANxY/0.jpg)](https://www.youtube.com/watch?v=KwSWLVUANxY&list=PLAetEEjGZI7OUBYFoQvI0QcO9GKAvT1xT&index=1&t=2613s)
 [![Watch My Video!](https://img.youtube.com/vi/aYwmopy6cdY/0.jpg)](https://youtu.be/aYwmopy6cdY&list=PLAetEEjGZI7OUBYFoQvI0QcO9GKAvT1xT&index=1)
 [![Watch My Video!](https://img.youtube.com/vi/8YvBlo1UEkM/0.jpg)](https://youtu.be/8YvBlo1UEkM&list=PLAetEEjGZI7OUBYFoQvI0QcO9GKAvT1xT&index=1)
 [![Watch My Video!](https://img.youtube.com/vi/WP8h4U2xXM4/0.jpg)](https://youtu.be/WP8h4U2xXM4&list=PLAetEEjGZI7OUBYFoQvI0QcO9GKAvT1xT&index=1)
